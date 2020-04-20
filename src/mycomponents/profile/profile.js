@@ -1,7 +1,41 @@
 import React,{Component} from 'react';
-import './profile.css'
+import './profile.css';
+import icone2 from './icone2.svg'
+import icone1 from './icone1.svg'
+import icone3 from './icone3.svg'
+import pen from './pen3.svg'
+
+const axios = require('axios').default; 
+
+
 class Profile extends Component {
-    state = {  }
+  constructor(){
+    super();
+    this.state = {  }
+    this.handelSubmit= this.handelSubmit.bind();
+  }
+
+    handelSubmit =  ()=>{
+      console.log("test");
+    
+     /* axios.post('http://localhost:3001/profiles',{
+       title:"test3",
+       company:"test3",
+       startDate:"",
+       endDate:"",
+       description:"test3"
+      })
+      .then(response =>{
+        console.log(response.data);
+      })
+      .catch(function (error) {
+       console.log(error);
+     })
+     */
+    
+    }
+
+
     render() { 
         return (  
           <div className="profilepage">
@@ -12,7 +46,7 @@ class Profile extends Component {
       <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div className="container-fluid">
           {/* Brand */}
-          <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">User Profile</a>
+          <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">App Logo</a>
           {/* Form */}
           <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <div className="form-group mb-0">
@@ -84,6 +118,7 @@ class Profile extends Component {
           </div>
         </div>
       </div>
+      
       <div className="container-fluid mt--7">
 
       <div className="row">
@@ -157,13 +192,21 @@ class Profile extends Component {
             </div>
             <div className="card-body">
               <form>
-                <h6 className="heading-small text-muted mb-4">Expériences</h6>
+                
+              <div className="row align-items-center">
+                <div className="col-8">
+                  <h3 className="mb-0"> Expériences </h3>
+                </div>
+                <div className="col-4 text-right">
+                <img className="icon text-info icon-sm" src={pen} alt="" />
+                </div>
+              </div>
                 {/** timeliner */}
                  
                 <div className="timeline timeline-one">
-        {/* Timeline Item 1 */}
-        <div className="timeline-item">
-          <span className="icon text-info icon-lg"><i className="fab fa-react"/></span>
+            {/* Timeline Item 1 */}
+            <div className="timeline-item">
+          <img className="icon text-info icon-lg" src={icone1} alt="" />
           <h4 className="my-3">Title</h4>
           <h5>company</h5>
           <span>JUN 17<sup>th</sup> ,2019</span> <span>- JUN 17<sup>th</sup> ,2020</span>
@@ -172,7 +215,7 @@ class Profile extends Component {
         </div>
         {/* Timeline Item 2 */}
         <div className="timeline-item">
-          <span className="icon text-info icon-lg"><i className="fab fa-react" /></span>
+        <img className="icon text-info icon-lg" src={icone2} alt="" />
           <h5 className="my-3">VueJs</h5>
           <p>Bootstrap. Build responsive, mobile-first projects on the web with the world's most popular front-end component library. Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your
             ideas.
@@ -180,59 +223,78 @@ class Profile extends Component {
         </div>
         {/* Timeline Item 3 */}
         <div className="timeline-item">
-          <span className="icon text-danger"><i className="fab fa-angular" /></span>
+        <img className="icon text-info icon-lg" src={icone3} alt="" />
           <h5 className="my-3">Angular</h5>
           <p>AngularJS is a JavaScript-based open-source front-end web application framework mainly maintained by Google and by a community of individuals and corporations to address many of the challenges encountered in developing
             single-page applications.</p>
         </div>
       </div>
      
-                
-
-
                 {/** end timeliner */}
+
                 
                  <hr className="my-4" />
-                {/* Address */}
-                <h6 className="heading-small text-muted mb-4">Contact information</h6>
+                 
+                {/* skills */}
+                <div className="row align-items-center">
+                <div className="col-8">
+                  <h3 className="mb-0">Skills</h3>
+                </div>
+                <div className="col-4 text-right">
+                <img className="icon text-info icon-sm" src={pen} alt="" />
+                </div>
+              </div>
                 <div className="pl-lg-4">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-address">Address</label>
-                        <input id="input-address" className="form-control form-control-alternative" placeholder="Home Address" defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4">
-                      <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-city">City</label>
-                        <input type="text" id="input-city" className="form-control form-control-alternative" placeholder="City" defaultValue="New York" />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-country">Country</label>
-                        <input type="text" id="input-country" className="form-control form-control-alternative" placeholder="Country" defaultValue="United States" />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-country">Postal code</label>
-                        <input type="number" id="input-postal-code" className="form-control form-control-alternative" placeholder="Postal code" />
-                      </div>
-                    </div>
+                  
+                <div class="table-responsive">
+              
+              <table class="table align-items-center table-flush">
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      skill 1
+                    </th>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                     skill 2 
+                    </th>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                     skill 3 
+                    </th>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                     skill 4
+                    </th>
+                   
+                  </tr>
+                  
+                </tbody>
+              </table>
                   </div>
                 </div>
                 <hr className="my-4" />
-                {/* Description */}
-                <h6 className="heading-small text-muted mb-4">About me</h6>
+                <div className="row align-items-center">
+                <div className="col-8">
+                  <h3 className="mb-0">Réalisations</h3>
+                </div>
+                <div className="col-4 text-right">
+                <img className="icon text-info icon-sm" src={pen} alt="" />
+                </div>
+              </div>
+            
                 <div className="pl-lg-4">
                   <div className="form-group">
-                    <label>About Me</label>
-                    <textarea rows={4} className="form-control form-control-alternative" placeholder="A few words about you ..." defaultValue={"A beautiful Dashboard for Bootstrap 4. It is Free and Open Source."} />
+                   <p> project details </p> 
                   </div>
+                  <button type="submit" onClick={  this.handelSubmit.bind(null) }> Test</button>
+                                     
                 </div>
               </form>
             </div>

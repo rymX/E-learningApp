@@ -1,17 +1,16 @@
-.timeline {
-    width: 100%;
-}
 .profilepage{
     padding: 0em 50px 5em 50px;
 }
-.navbarprofile{
-    background-color: black;
+/*  timeliner css*/ 
+.timeline {
+    width: 100%;
 }
+
 .timeline.timeline-one .timeline-item {
     position: relative;
     width: 50%;
     margin-left: 50%;
-    padding-bottom: 2.75rem;
+    padding-bottom: 0.0rem;
     padding-left: 2.75rem;
     text-align: left;
 }
@@ -88,3 +87,4 @@
 .timeline.timeline-one .timeline-item:nth-child(2n+1):after {
     margin-right: -0.0625rem;
 }
+/* end timeliner css*/ 
