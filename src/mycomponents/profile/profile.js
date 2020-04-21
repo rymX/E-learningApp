@@ -1,9 +1,6 @@
 import React,{Component} from 'react';
+import Experience from'./experience.jsx';
 import './profile.css';
-import icone2 from './icone2.svg'
-import icone1 from './icone1.svg'
-import icone3 from './icone3.svg'
-import pen from './pen3.svg'
 
 const axios = require('axios').default; 
 
@@ -11,14 +8,45 @@ const axios = require('axios').default;
 class Profile extends Component {
   constructor(){
     super();
-    this.state = {  }
-    this.handelSubmit= this.handelSubmit.bind();
+    this.state = { 
+      experiences:[]
+     }
   }
 
-    handelSubmit =  ()=>{
-      console.log("test");
+  componentDidMount (){
+
+    axios.get('http://localhost:3001/profiles')
+    .then(response =>{
+      console.log(response.data)
+      this.setState({experiences:response.data});
+    })
+    .catch( function (error){
+      console.log(error);
+    })
     
-     /* axios.post('http://localhost:3001/profiles',{
+
+  }
+  /*
+  handelChange = async ()=> {
+    axios.get('http://localhost:3001/profiles')
+    .then(response =>{
+      const experience = response.data;
+      
+      console.log({experience}); 
+
+      
+    })
+    .catch( function (error){
+      console.log(error);
+    })
+    
+
+  }*/
+
+   /* handelSubmit = ()=>{
+     console.log("test");
+    
+      axios.post('http://localhost:3001/profiles',{
        title:"test3",
        company:"test3",
        startDate:"",
@@ -31,12 +59,15 @@ class Profile extends Component {
       .catch(function (error) {
        console.log(error);
      })
-     */
+     
     
     }
-
+*/
 
     render() { 
+      const {experiences}= this.state ;
+      console.log(experiences);
+
         return (  
           <div className="profilepage">
                 
@@ -198,38 +229,13 @@ class Profile extends Component {
                   <h3 className="mb-0"> Expériences </h3>
                 </div>
                 <div className="col-4 text-right">
-                <img className="icon text-info icon-sm" src={pen} alt="" />
+                <img className="icon text-info icon-sm" src="../assets/img/icons/common/pen.svg" alt="" />
                 </div>
               </div>
                 {/** timeliner */}
                  
-                <div className="timeline timeline-one">
-            {/* Timeline Item 1 */}
-            <div className="timeline-item">
-          <img className="icon text-info icon-lg" src={icone1} alt="" />
-          <h4 className="my-3">Title</h4>
-          <h5>company</h5>
-          <span>JUN 17<sup>th</sup> ,2019</span> <span>- JUN 17<sup>th</sup> ,2020</span>
-          <p/>
-          <p>Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum.</p>
-        </div>
-        {/* Timeline Item 2 */}
-        <div className="timeline-item">
-        <img className="icon text-info icon-lg" src={icone2} alt="" />
-          <h5 className="my-3">VueJs</h5>
-          <p>Bootstrap. Build responsive, mobile-first projects on the web with the world's most popular front-end component library. Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your
-            ideas.
-          </p>
-        </div>
-        {/* Timeline Item 3 */}
-        <div className="timeline-item">
-        <img className="icon text-info icon-lg" src={icone3} alt="" />
-          <h5 className="my-3">Angular</h5>
-          <p>AngularJS is a JavaScript-based open-source front-end web application framework mainly maintained by Google and by a community of individuals and corporations to address many of the challenges encountered in developing
-            single-page applications.</p>
-        </div>
-      </div>
-     
+                <Experience exp={experiences} />
+               
                 {/** end timeliner */}
 
                 
@@ -241,7 +247,7 @@ class Profile extends Component {
                   <h3 className="mb-0">Skills</h3>
                 </div>
                 <div className="col-4 text-right">
-                <img className="icon text-info icon-sm" src={pen} alt="" />
+                <img className="icon text-info icon-sm" src="../assets/img/icons/common/pen.svg" alt="" />
                 </div>
               </div>
                 <div className="pl-lg-4">
@@ -285,7 +291,7 @@ class Profile extends Component {
                   <h3 className="mb-0">Réalisations</h3>
                 </div>
                 <div className="col-4 text-right">
-                <img className="icon text-info icon-sm" src={pen} alt="" />
+                <img className="icon text-info icon-sm" src="../assets/img/icons/common/pen.svg" alt="" />
                 </div>
               </div>
             
@@ -293,7 +299,6 @@ class Profile extends Component {
                   <div className="form-group">
                    <p> project details </p> 
                   </div>
-                  <button type="submit" onClick={  this.handelSubmit.bind(null) }> Test</button>
                                      
                 </div>
               </form>
