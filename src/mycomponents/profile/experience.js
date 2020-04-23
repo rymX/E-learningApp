@@ -3,12 +3,8 @@ import './profile.css';
 import icon from './icone1.svg';
 
 const Experience=(props)=> {
-    console.log(props);
-        return ( 
-
-        
+ return ( 
             <div className="timeline timeline-one">
-
               {
                 props.exp.map( (ex)=>{
                   return (
@@ -19,18 +15,12 @@ const Experience=(props)=> {
                   <div>{ex.startDate}</div> <div>{ex.endDate}</div>
                   <p/>
                   <p>{ex.description}</p>
-                </div>
-
-                )
-
-                 
+                  </div>
+                );
                 })
               }
-            
-        
        
-       
-      </div>
+            </div>
      
             
          );

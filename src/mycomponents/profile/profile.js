@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
-import Experience from'./experience.jsx';
+import Experience from'./experience.js';
 import './profile.css';
+import {Button , Modal , Form, Input, DatePicker} from 'antd'
 
 const axios = require('axios').default; 
 
@@ -10,63 +11,71 @@ class Profile extends Component {
     super();
     this.state = { 
       experiences:[]
+      , visible: false 
      }
   }
 
+todo =()=>{
+   axios.get('http://localhost:3001/profiles')
+.then(response =>{
+  this.setState({experiences:response.data});
+})
+.catch( function (error){
+  console.log(error);
+})}
   componentDidMount (){
 
-    axios.get('http://localhost:3001/profiles')
-    .then(response =>{
-      console.log(response.data)
-      this.setState({experiences:response.data});
-    })
-    .catch( function (error){
-      console.log(error);
-    })
-    
-
+   this.todo();
   }
-  /*
-  handelChange = async ()=> {
-    axios.get('http://localhost:3001/profiles')
-    .then(response =>{
-      const experience = response.data;
-      
-      console.log({experience}); 
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
 
-      
-    })
-    .catch( function (error){
-      console.log(error);
-    })
-    
-
-  }*/
-
-   /* handelSubmit = ()=>{
-     console.log("test");
-    
-      axios.post('http://localhost:3001/profiles',{
-       title:"test3",
-       company:"test3",
-       startDate:"",
-       endDate:"",
-       description:"test3"
-      })
-      .then(response =>{
-        console.log(response.data);
-      })
-      .catch(function (error) {
-       console.log(error);
-     })
-     
-    
-    }
-*/
+  handleOk = (e) => {
+  
+    this.setState({
+      visible: false,
+    });
+ 
+  };
+  handleCancel = e => {
+   
+    this.setState({
+      visible: false,
+    });
+   
+  };
+  onFinish = values => {
+    var experience = {
+      title: values.title,
+      company: values.company,
+      startDate:values.startDate,
+      endDate: values.endDate,
+      description:values.description,
+  }
+  axios.post('http://localhost:3001/profiles',{
+    title:experience.title ,
+    company:experience.company,
+    startDate:experience.startDate,
+    endDate:experience.endDate,
+    description:experience.description
+   })
+   .then(response =>{
+     this.todo();
+   })
+   .catch(function (error) {
+    console.log(error);
+  })
+  this.setState({
+    visible: false,
+  });
+  
+  }
 
     render() { 
       const {experiences}= this.state ;
-      console.log(experiences);
 
         return (  
           <div className="profilepage">
@@ -229,12 +238,75 @@ class Profile extends Component {
                   <h3 className="mb-0"> Expériences </h3>
                 </div>
                 <div className="col-4 text-right">
+               {/** 
                 <img className="icon text-info icon-sm" src="../assets/img/icons/common/pen.svg" alt="" />
+               */}
+                <Button className="icon text-info icon-sm"  onClick={this.showModal}>
+          +
+        </Button>
                 </div>
               </div>
                 {/** timeliner */}
+                <div>
+        
+        <Modal
+          title="Add experience"
+          centered
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={null}
+        >
+
+<Form onFinish={this.onFinish} >
+  <h4>Title</h4>
+      <Form.Item
+        name= 'title'
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <h4>Company</h4>
+      <Form.Item
+        name= 'company'
+       
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
+        
+      </Form.Item>
+      <h4>Start Date</h4>
+      <Form.Item name="startDate"
+      >
+          <DatePicker />
+        </Form.Item>
+        <h4>End Date</h4>
+        <Form.Item name="endDate"
+        >
+          <DatePicker />
+        </Form.Item>
+     
+        <h4>Description</h4>
+      <Form.Item name= 'description'
+      >
+        <Input.TextArea />
+      </Form.Item>
+      
+      <button  onClick={this.onFinish}>submit</button>
+      <button  onClick={this.handleCancel}>cancel</button>
+    </Form>
+        </Modal>
+      </div>
                  
-                <Experience exp={experiences} />
+                <Experience exp={experiences}/>
                
                 {/** end timeliner */}
 
