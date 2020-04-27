@@ -123,7 +123,7 @@ class Dashboard extends Component {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="./examples/login.html">
-                  <i className="ni ni-key-25 text-info" /> Login
+                  <i className="ni ni-key-25 text-info" /> <Link to="/Signin"> Login </Link>
                 </a>
               </li>
               <li className="nav-item">

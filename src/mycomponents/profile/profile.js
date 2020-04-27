@@ -7,26 +7,34 @@ const axios = require('axios').default;
 
 
 class Profile extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = { 
       experiences:[]
-      , visible: false 
+      , visible: false ,
+      
      }
+     this.onFinish = this.onFinish.bind(this);
   }
 
 todo =()=>{
-   axios.get('http://localhost:3001/profiles')
+ const id = this.props.user._id;
+
+
+   axios.get(`http://localhost:3001/profiles/owner/${id}`)   
 .then(response =>{
-  this.setState({experiences:response.data});
+  
+ this.setState({experiences:response.data});
 })
 .catch( function (error){
   console.log(error);
-})}
+})
+}
   componentDidMount (){
 
    this.todo();
   }
+  
   showModal = () => {
     this.setState({
       visible: true,
@@ -40,7 +48,7 @@ todo =()=>{
     });
  
   };
-  handleCancel = e => {
+  handleCancel = ()=> {
    
     this.setState({
       visible: false,
@@ -60,7 +68,8 @@ todo =()=>{
     company:experience.company,
     startDate:experience.startDate,
     endDate:experience.endDate,
-    description:experience.description
+    description:experience.description,
+    owner : this.props.user._id
    })
    .then(response =>{
      this.todo();
@@ -75,7 +84,9 @@ todo =()=>{
   }
 
     render() { 
+      const actualUser = this.props.user ;
       const {experiences}= this.state ;
+     
 
         return (  
           <div className="profilepage">
@@ -107,7 +118,7 @@ todo =()=>{
                     <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg" />
                   </span>
                   <div className="media-body ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                    <span className="mb-0 text-sm  font-weight-bold"> {actualUser.name}   {actualUser.lastname} </span>
                   </div>
                 </div>
               </a>
@@ -151,7 +162,7 @@ todo =()=>{
         <div className="container-fluid d-flex align-items-center">
           <div className="row">
             <div className="col-lg-7 col-md-10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
+              <h1 className="display-2 text-white">Hello {actualUser.name} </h1>
               <p className="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
               <a href="#!" className="btn btn-info">Edit profile</a>
             </div>
@@ -200,7 +211,7 @@ todo =()=>{
               </div>
               <div className="text-center">
                 <h3>
-                  Jessica Jones<span className="font-weight-light">, 27</span>
+                {actualUser.name}   {actualUser.lastname} <span className="font-weight-light">, 27</span>
                 </h3>
                 <div className="h5 font-weight-300">
                   <i className="ni location_pin mr-2" />Bucharest, Romania
@@ -241,7 +252,7 @@ todo =()=>{
                {/** 
                 <img className="icon text-info icon-sm" src="../assets/img/icons/common/pen.svg" alt="" />
                */}
-                <Button className="icon text-info icon-sm"  onClick={this.showModal}>
+                <Button className="navbar-toggler" onClick={this.showModal}>
           +
         </Button>
                 </div>
@@ -251,6 +262,8 @@ todo =()=>{
         
         <Modal
           title="Add experience"
+          destroyOnClose={true}
+          confirmLoading={true}
           centered
           visible={this.state.visible}
           onOk={this.handleOk}
@@ -258,7 +271,7 @@ todo =()=>{
           footer={null}
         >
 
-<Form onFinish={this.onFinish} >
+<Form onFinish={this.onFinish} name="formulaire" >
   <h4>Title</h4>
       <Form.Item
         name= 'title'
@@ -305,8 +318,10 @@ todo =()=>{
     </Form>
         </Modal>
       </div>
-                 
-                <Experience exp={experiences}/>
+                {
+                  experiences.length ? <Experience exp={experiences}/> : <div>you have no exp</div>
+                }  
+                
                
                 {/** end timeliner */}
 
