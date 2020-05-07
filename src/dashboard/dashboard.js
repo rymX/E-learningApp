@@ -128,7 +128,7 @@ class Dashboard extends Component {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="./examples/register.html">
-                  <i className="ni ni-circle-08 text-pink" /> Register
+                  <i className="ni ni-circle-08 text-pink" />  <Link to="/Signup">Register </Link>
                 </a>
               </li>
             </ul>

@@ -1,7 +1,13 @@
 import React,{Component} from 'react';
 import Experience from'./experience.js';
 import './profile.css';
-import {Button , Modal , Form, Input, DatePicker} from 'antd'
+import {Button , Modal , Form, Input, DatePicker ,Avatar } from 'antd'
+import {PlusOutlined , UserOutlined } from '@ant-design/icons'
+import EditProfile from './EditProfile';
+// import pic from '../assets/img/theme/team-4-800x800.jpg';
+import pic1 from './team-1-800x800.jpg';
+import pic2 from './team-4-800x800.jpg'
+
 
 const axios = require('axios').default; 
 
@@ -14,10 +20,21 @@ class Profile extends Component {
       , visible: false ,
       
      }
-     this.onFinish = this.onFinish.bind(this);
+  }
+  handleUserpic(avatar){
+    console.log(avatar);
+  }
+  handelLogoutClik(){
+    // destroy session
+    this.props.history.push('/')
+    axios.post('http://localhost:3001/compts/logout')
+   .then()
+    .catch()
+   this.props.handelLogout();
   }
 
 todo =()=>{
+  // console.log(this.props.user)
  const id = this.props.user._id;
 
 
@@ -30,24 +47,14 @@ todo =()=>{
   console.log(error);
 })
 }
-  componentDidMount (){
-
-   this.todo();
-  }
+  
   
   showModal = () => {
     this.setState({
-      visible: true,
+      visible: true
     });
   };
 
-  handleOk = (e) => {
-  
-    this.setState({
-      visible: false,
-    });
- 
-  };
   handleCancel = ()=> {
    
     this.setState({
@@ -85,6 +92,8 @@ todo =()=>{
 
     render() { 
       const actualUser = this.props.user ;
+      this.todo();
+     // console.log(actualUser);
       const {experiences}= this.state ;
      
 
@@ -112,16 +121,16 @@ todo =()=>{
           {/* User */}
           <ul className="navbar-nav align-items-center d-none d-md-flex">
             <li className="nav-item dropdown">
-              <a className="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div className="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="media align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg" />
+                    <img alt=" " src="../assets/img/theme/team-4-800x800.jpg" />
                   </span>
                   <div className="media-body ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm  font-weight-bold"> {actualUser.name}   {actualUser.lastname} </span>
                   </div>
                 </div>
-              </a>
+              </div>
               <div className="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                 <div className=" dropdown-header noti-title">
                   <h6 className="text-overflow m-0">Welcome!</h6>
@@ -143,10 +152,10 @@ todo =()=>{
                   <span>Support</span>
                 </a>
                 <div className="dropdown-divider" />
-                <a href="#!" className="dropdown-item">
+                <div className="dropdown-item">
                   <i className="ni ni-user-run" />
-                  <span>Logout</span>
-                </a>
+                  <span> <button onClick={ () => this.handelLogoutClik()} > Logout </button> </span>
+                </div>
               </div>
             </li>
           </ul>
@@ -165,6 +174,7 @@ todo =()=>{
               <h1 className="display-2 text-white">Hello {actualUser.name} </h1>
               <p className="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
               <a href="#!" className="btn btn-info">Edit profile</a>
+              <EditProfile handleUserpic = {()=> this.handleUserpic} />
             </div>
           </div>
         </div>
@@ -179,7 +189,7 @@ todo =()=>{
               <div className="col-lg-3 order-lg-2">
                 <div className="card-profile-image">
                   <a href="#">
-                    <img src="../assets/img/theme/team-4-800x800.jpg" className="rounded-circle" />
+                    <img alt="" src={pic2} className="rounded-circle" />
                   </a>
                 </div>
               </div>
@@ -235,6 +245,7 @@ todo =()=>{
               <div className="row align-items-center">
                 <div className="col-8">
                   <h3 className="mb-0">***********</h3>
+                  <Avatar size={64} icon={<UserOutlined />} />
                 </div>
                 <div className="col-4 text-right">
                   <a href="#!" className="btn btn-sm btn-primary">Settings</a>
@@ -249,12 +260,11 @@ todo =()=>{
                   <h3 className="mb-0"> Expériences </h3>
                 </div>
                 <div className="col-4 text-right">
-               {/** 
-                <img className="icon text-info icon-sm" src="../assets/img/icons/common/pen.svg" alt="" />
-               */}
-                <Button className="navbar-toggler" onClick={this.showModal}>
-          +
-        </Button>
+              
+                <Button onClick={this.showModal}  type="primary"   icon={<PlusOutlined style={{ fontSize: '20px' }} />}></Button>
+  
+  
+        
                 </div>
               </div>
                 {/** timeliner */}
@@ -266,12 +276,12 @@ todo =()=>{
           confirmLoading={true}
           centered
           visible={this.state.visible}
-          onOk={this.handleOk}
+         
           onCancel={this.handleCancel}
           footer={null}
         >
 
-<Form onFinish={this.onFinish} name="formulaire" >
+<Form onFinish={this.onFinish} >
   <h4>Title</h4>
       <Form.Item
         name= 'title'
@@ -313,9 +323,10 @@ todo =()=>{
         <Input.TextArea />
       </Form.Item>
       
-      <button  onClick={this.onFinish}>submit</button>
-      <button  onClick={this.handleCancel}>cancel</button>
+      <button  onClick={()=> this.onFinish}>submit</button>
+     
     </Form>
+    <button  onClick={this.handleCancel}>cancel</button>
         </Modal>
       </div>
                 {
@@ -398,22 +409,22 @@ todo =()=>{
         <div className="row align-items-center justify-content-xl-between">
           <div className="col-xl-6">
             <div className="copyright text-center text-xl-left text-muted">
-              © 2018 <a href="https://www.creative-tim.com" className="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+              © 2018 <a href="https://www.creative-tim.com" className="font-weight-bold ml-1">Creative Tim</a>
             </div>
           </div>
           <div className="col-xl-6">
             <ul className="nav nav-footer justify-content-center justify-content-xl-end">
               <li className="nav-item">
-                <a href="https://www.creative-tim.com" className="nav-link" target="_blank">Creative Tim</a>
+                <a href="https://www.creative-tim.com" className="nav-link" >Creative Tim</a>
               </li>
               <li className="nav-item">
-                <a href="https://www.creative-tim.com/presentation" className="nav-link" target="_blank">About Us</a>
+                <a href="https://www.creative-tim.com/presentation" className="nav-link" >About Us</a>
               </li>
               <li className="nav-item">
-                <a href="http://blog.creative-tim.com" className="nav-link" target="_blank">Blog</a>
+                <a href="http://blog.creative-tim.com" className="nav-link" >Blog</a>
               </li>
               <li className="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" className="nav-link" target="_blank">MIT License</a>
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" className="nav-link" >MIT License</a>
               </li>
             </ul>
           </div>
