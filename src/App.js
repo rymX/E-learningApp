@@ -7,7 +7,7 @@ import Signin from './container/signin';
 import Signup from './container/signup';
 
 import './App.css';
- 
+
  class App extends Component {
   constructor(){
     super();
@@ -25,7 +25,7 @@ import './App.css';
   }
   todo(){
     axios.get('http://localhost:3001/compts/isLogged')
-  
+
     .then(response => {
       if(response.data.status=== "logged-in" && this.state.status === "not-logged-in"   )
       {
@@ -49,8 +49,8 @@ this.todo();
     })
 
   }
-  
-  
+
+
 
   render()  {
 
@@ -60,15 +60,15 @@ return (
       <Switch>
 
         <Route
-      
+
         exact
-         path='/' 
+         path='/'
         render = {props => (
           <Dashboard {...props} />
         )}
          />
-         
-        <Route 
+
+        <Route
         path="/profile"
         render = {props => (
           <Profile {...props} handelLogout = {this.handelLogout} user={this.state.user} />
@@ -77,21 +77,21 @@ return (
          />
 
         <Route
-         path="/Signin" 
+         path="/Signin"
          render = { props => (
            <Signin {...props} handelLogin = {this.handelLogin}  />
          )}
            />
-          <Route 
+          <Route
           path="/Signup"
           render = { props => ( <Signup {...props} />
             )}
 
           />
-         
-        
+
+
       </Switch>
-     
+
       </BrowserRouter>
 
     </div>

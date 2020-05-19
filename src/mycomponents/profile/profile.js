@@ -4,25 +4,39 @@ import './profile.css';
 import {Button , Modal , Form, Input, DatePicker ,Avatar } from 'antd'
 import {PlusOutlined , UserOutlined } from '@ant-design/icons'
 import EditProfile from './EditProfile';
-// import pic from '../assets/img/theme/team-4-800x800.jpg';
-import pic1 from './team-1-800x800.jpg';
 import pic2 from './team-4-800x800.jpg'
 
 
-const axios = require('axios').default; 
+const axios = require('axios').default;
 
 
 class Profile extends Component {
   constructor(props){
     super(props);
-    this.state = { 
+    this.state = {
       experiences:[]
       , visible: false ,
-      
+      picture :"",
+
      }
+     this.handleUserpic = this.handleUserpic.bind(this);
   }
-  handleUserpic(avatar){
-    console.log(avatar);
+  componentDidUpdate(){
+    
+    const id = this.props.user._id;
+    axios.get(`http://localhost:3001/compts/profilepicture/owner/${id}`)
+    .then(responce =>{
+      console.log(responce.data[0].url);
+      const picture = "http://localhost:3001/"+responce.data[0].url ;
+      this.setState({picture:picture})
+
+    } )
+    .catch (function (error){
+      console.log(error)
+    })
+  }
+  handleUserpic(data){
+    this.setState({picture: data})
   }
   handelLogoutClik(){
     // destroy session
@@ -34,21 +48,25 @@ class Profile extends Component {
   }
 
 todo =()=>{
-  // console.log(this.props.user)
+ 
  const id = this.props.user._id;
 
 
-   axios.get(`http://localhost:3001/profiles/owner/${id}`)   
+   axios.get(`http://localhost:3001/profiles/owner/${id}`)
 .then(response =>{
-  
+
  this.setState({experiences:response.data});
 })
 .catch( function (error){
   console.log(error);
-})
+}) ;
+
+
+
 }
-  
-  
+
+
+
   showModal = () => {
     this.setState({
       visible: true
@@ -56,11 +74,11 @@ todo =()=>{
   };
 
   handleCancel = ()=> {
-   
+
     this.setState({
       visible: false,
     });
-   
+
   };
   onFinish = values => {
     var experience = {
@@ -87,19 +105,19 @@ todo =()=>{
   this.setState({
     visible: false,
   });
-  
+
   }
 
-    render() { 
+    render() {
       const actualUser = this.props.user ;
       this.todo();
      // console.log(actualUser);
       const {experiences}= this.state ;
-     
 
-        return (  
+
+        return (
           <div className="profilepage">
-                
+
       <div className="main-content">
 
           {/* Navbar */}
@@ -124,7 +142,7 @@ todo =()=>{
               <div className="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="media align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img alt=" " src="../assets/img/theme/team-4-800x800.jpg" />
+                    <img alt=" " src={this.state.picture} />
                   </span>
                   <div className="media-body ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm  font-weight-bold"> {actualUser.name}   {actualUser.lastname} </span>
@@ -162,7 +180,7 @@ todo =()=>{
         </div>
       </nav>
       {/* End Navbar */}
-      
+
        {/* Header */}
        <div className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style={{minHeight: '600px', backgroundImage: 'url(../assets/img/theme/profile-cover.jpg)', backgroundSize: 'cover', backgroundPosition: 'center top'}}>
         {/* Mask */}
@@ -174,12 +192,12 @@ todo =()=>{
               <h1 className="display-2 text-white">Hello {actualUser.name} </h1>
               <p className="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
               <a href="#!" className="btn btn-info">Edit profile</a>
-              <EditProfile handleUserpic = {()=> this.handleUserpic} />
+              <EditProfile userid = {actualUser._id}  handleUserpic = {this.handleUserpic} />
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="container-fluid mt--7">
 
       <div className="row">
@@ -189,7 +207,7 @@ todo =()=>{
               <div className="col-lg-3 order-lg-2">
                 <div className="card-profile-image">
                   <a href="#">
-                    <img alt="" src={pic2} className="rounded-circle" />
+                    <img alt="" src={this.state.picture} className="rounded-circle" />
                   </a>
                 </div>
               </div>
@@ -245,7 +263,6 @@ todo =()=>{
               <div className="row align-items-center">
                 <div className="col-8">
                   <h3 className="mb-0">***********</h3>
-                  <Avatar size={64} icon={<UserOutlined />} />
                 </div>
                 <div className="col-4 text-right">
                   <a href="#!" className="btn btn-sm btn-primary">Settings</a>
@@ -254,29 +271,29 @@ todo =()=>{
             </div>
             <div className="card-body">
               <form>
-                
+
               <div className="row align-items-center">
                 <div className="col-8">
                   <h3 className="mb-0"> Expériences </h3>
                 </div>
                 <div className="col-4 text-right">
-              
+
                 <Button onClick={this.showModal}  type="primary"   icon={<PlusOutlined style={{ fontSize: '20px' }} />}></Button>
-  
-  
-        
+
+
+
                 </div>
               </div>
                 {/** timeliner */}
                 <div>
-        
+
         <Modal
           title="Add experience"
           destroyOnClose={true}
           confirmLoading={true}
           centered
           visible={this.state.visible}
-         
+
           onCancel={this.handleCancel}
           footer={null}
         >
@@ -296,7 +313,7 @@ todo =()=>{
       <h4>Company</h4>
       <Form.Item
         name= 'company'
-       
+
         rules={[
           {
             required: true,
@@ -304,7 +321,7 @@ todo =()=>{
         ]}
       >
         <Input />
-        
+
       </Form.Item>
       <h4>Start Date</h4>
       <Form.Item name="startDate"
@@ -316,29 +333,29 @@ todo =()=>{
         >
           <DatePicker />
         </Form.Item>
-     
+
         <h4>Description</h4>
       <Form.Item name= 'description'
       >
         <Input.TextArea />
       </Form.Item>
-      
+
       <button  onClick={()=> this.onFinish}>submit</button>
-     
+
     </Form>
     <button  onClick={this.handleCancel}>cancel</button>
         </Modal>
       </div>
                 {
                   experiences.length ? <Experience exp={experiences}/> : <div>you have no exp</div>
-                }  
-                
-               
+                }
+
+
                 {/** end timeliner */}
 
-                
+
                  <hr className="my-4" />
-                 
+
                 {/* skills */}
                 <div className="row align-items-center">
                 <div className="col-8">
@@ -349,36 +366,36 @@ todo =()=>{
                 </div>
               </div>
                 <div className="pl-lg-4">
-                  
+
                 <div class="table-responsive">
-              
+
               <table class="table align-items-center table-flush">
                 <tbody>
                   <tr>
                     <th scope="row">
                       skill 1
                     </th>
-                    
+
                   </tr>
                   <tr>
                     <th scope="row">
-                     skill 2 
+                     skill 2
                     </th>
-                    
+
                   </tr>
                   <tr>
                     <th scope="row">
-                     skill 3 
+                     skill 3
                     </th>
-                    
+
                   </tr>
                   <tr>
                     <th scope="row">
                      skill 4
                     </th>
-                   
+
                   </tr>
-                  
+
                 </tbody>
               </table>
                   </div>
@@ -392,12 +409,12 @@ todo =()=>{
                 <img className="icon text-info icon-sm" src="../assets/img/icons/common/pen.svg" alt="" />
                 </div>
               </div>
-            
+
                 <div className="pl-lg-4">
                   <div className="form-group">
-                   <p> project details </p> 
+                   <p> project details </p>
                   </div>
-                                     
+
                 </div>
               </form>
             </div>
@@ -434,10 +451,10 @@ todo =()=>{
           </div>
 
           </div>
-    
+
             </div>
         );
     }
 }
- 
+
 export default Profile;
