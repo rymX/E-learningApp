@@ -28,7 +28,7 @@ class EditProfile extends Component {
     super(props);
 
     this.state = { visible: false ,
-      picture:"" , loading: false,
+      picture:"" , loading: false,imageUrl:{pic1}
     }
   }
 
@@ -71,8 +71,8 @@ class EditProfile extends Component {
         const fd = new FormData();
         fd.append('avatar',this.state.picture);
         fd.append('user', this.props.userid);
-       // axios.patch('http://localhost:3001/compts/profilepicture', fd )
-        axios.post('http://localhost:3001/compts/profilepicture', fd )
+        axios.patch('http://localhost:3001/compts/profilepicture', fd )
+        // axios.post('http://localhost:3001/compts/profilepicture', fd )
 
         .then(responce =>{ 
          console.log(responce)

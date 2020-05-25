@@ -1,5 +1,6 @@
 import React ,{Component} from 'react';
 import axios  from 'axios'
+import { Link } from 'react-router-dom';
 class Signin extends Component {
     constructor(props){
        super(props);
@@ -16,10 +17,10 @@ class Signin extends Component {
 
      handelvalue = event =>{
         event.preventDefault();
-        const username =event.target.elements.username.value;
+        const email =event.target.elements.email.value;
        const password =event.target.elements.password.value;
 
-       axios.get(`http://localhost:3001/compts/name/${username}/password/${password}`)
+       axios.get(`http://localhost:3001/compts/email/${email}/password/${password}`)
   
        .then(response => {
          console.log(response);
@@ -149,7 +150,7 @@ class Signin extends Component {
                         <div className="input-group-prepend">
                           <span className="input-group-text"><i className="ni ni-email-83" /></span>
                         </div>
-                        <input name="username" className="form-control" placeholder="username" />
+                        <input name="email" className="form-control" placeholder="email" />
                       </div>
                     </div>
                     <div className="form-group">
@@ -180,7 +181,13 @@ class Signin extends Component {
                   <a href="#" className="text-light"><small>Forgot password?</small></a>
                 </div>
                 <div className="col-6 text-right">
-                  <a href="#" className="text-light"><small>Create new account</small></a>
+                  
+                  <a href="#" className="text-light">
+                    <small>
+                     <Link to="/Signup" >Create new account </Link> 
+                      </small>
+                    </a>
+                  
                 </div>
               </div>
             </div>
