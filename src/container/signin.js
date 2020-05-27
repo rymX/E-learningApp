@@ -72,28 +72,34 @@ class Signin extends Component {
               {/* Navbar items */}
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <a className="nav-link nav-link-icon" href="../index.html">
+                  <div className="nav-link nav-link-icon">
                     <i className="ni ni-planet" />
-                    <span className="nav-link-inner--text">Dashboard</span>
-                  </a>
+                    <span className="nav-link-inner--text">
+                      <Link className="link" to="/">
+                      Accueil
+                      </Link>
+                      </span>
+                  </div>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link nav-link-icon" href="../examples/register.html">
+                  <div className="nav-link nav-link-icon" >
                     <i className="ni ni-circle-08" />
-                    <span className="nav-link-inner--text">Register</span>
-                  </a>
+                    <span className="nav-link-inner--text">
+                      <Link className="link"  to="/Signup">
+                      Register
+                      </Link>
+                      </span>
+                  </div>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link nav-link-icon" href="../examples/login.html">
+                  <div className="nav-link nav-link-icon" >
                     <i className="ni ni-key-25" />
-                    <span className="nav-link-inner--text">Login</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link nav-link-icon" href="../examples/profile.html">
-                    <i className="ni ni-single-02" />
-                    <span className="nav-link-inner--text">Profile</span>
-                  </a>
+                    <span className="nav-link-inner--text">
+                      <Link className="link" to="/Signin" >
+                      Login
+                      </Link>
+                      </span>
+                  </div>
                 </li>
               </ul>
             </div>

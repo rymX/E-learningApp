@@ -1,5 +1,6 @@
 import React , {Component} from 'react';
 import axios from 'axios'; 
+import { Link } from 'react-router-dom';
 
 class Signup extends Component {
     state = {  }
@@ -72,28 +73,35 @@ class Signup extends Component {
             {/* Navbar items */}
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-link nav-link-icon" href="../index.html">
+                <div className="nav-link nav-link-icon">
                   <i className="ni ni-planet" />
-                  <span className="nav-link-inner--text">Dashboard</span>
-                </a>
+                  <span className="nav-link-inner--text">
+                    <Link className="link" to="/">
+                    Accueil
+                    </Link>
+                    </span>
+                </div>
               </li>
               <li className="nav-item">
-                <a className="nav-link nav-link-icon" href="../examples/register.html">
+                <div className="nav-link nav-link-icon">
                   <i className="ni ni-circle-08" />
-                  <span className="nav-link-inner--text">Register</span>
-                </a>
+                  <span className="nav-link-inner--text">
+                    <Link className="link" to="/Signup">
+                    Register
+                    </Link>
+                    </span>
+                </div>
               </li>
               <li className="nav-item">
-                <a className="nav-link nav-link-icon" href="../examples/login.html">
+                <div className="nav-link nav-link-icon" >
                   <i className="ni ni-key-25" />
-                  <span className="nav-link-inner--text">Login</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link nav-link-icon" href="../examples/profile.html">
-                  <i className="ni ni-single-02" />
-                  <span className="nav-link-inner--text">Profile</span>
-                </a>
+                  <span className="nav-link-inner--text">
+                    <Link className="link" to="/Signin"> 
+                    login
+                   </Link>
+
+                    </span>
+                </div>
               </li>
             </ul>
           </div>
@@ -105,7 +113,7 @@ class Signup extends Component {
             <div className="header-body text-center mb-7">
               <div className="row justify-content-center">
                 <div className="col-lg-5 col-md-6">
-                  <h1 className="text-white">Welcome!</h1>
+                  <h1 className="text-white">Register </h1>
                   <p className="text-lead text-light">Use these awesome forms to login or create new account in your project for free.</p>
                 </div>
               </div>
@@ -180,9 +188,6 @@ class Signup extends Component {
                         <input name="password" className="form-control" placeholder="Password" type="password" />
                       </div>
                     </div>
-
-
-                    <div className="text-muted font-italic"><small>password strength: <span className="text-success font-weight-700">strong</span></small></div>
                     <div className="row my-4">
                       <div className="col-12">
                         <div className="custom-control custom-control-alternative custom-checkbox">
