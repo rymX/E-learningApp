@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 class Signin extends Component {
     constructor(props){
        super(props);
+       this.state = {
+         error :'Or sign in with credentials'
+       }
 
         this.handelSuccess = this.handelSuccess.bind(this);
     }
@@ -24,13 +27,12 @@ class Signin extends Component {
   
        .then(response => {
          console.log(response);
-        if (response.data.length===1)
+        if (response.data.length >0)
           { this.handelSuccess(response.data[0])
+          } 
             
-            
-  //  else {
-   //   message.error('name and password are incorrect ') 
-   } 
+      
+    
   
   })
   .catch(function (error) {
@@ -143,7 +145,8 @@ class Signin extends Component {
                 </div>
                 <div className="card-body px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
-                    <small>Or sign in with credentials</small>
+                    <small> {this.state.error} </small>
+     {/* { .length ==0 ?  <small> Or sign in with credentials</small> : <small> email not correct</small>  } */}
                   </div>
 
 

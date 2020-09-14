@@ -1,8 +1,10 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 class Dashboard extends Component {
-    state = {  }
+   
     render() { 
+      console.log(this.props);
       return (
         <div className="bg-default">
               <div className="main-content">
@@ -136,5 +138,8 @@ class Dashboard extends Component {
        
     }
 }
+const mapStateToProps=(state)=>{
+ return {user : state.user}
+}
  
-export default Dashboard;
+export default connect(mapStateToProps) (Dashboard);

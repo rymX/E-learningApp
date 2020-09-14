@@ -21,15 +21,16 @@ class Profile extends Component {
      }
      this.handleUserpic = this.handleUserpic.bind(this);
   }
-  componentDidUpdate(){
+  componentDidMount(){
     
     const id = this.props.user._id;
     axios.get(`http://localhost:3001/compts/profilepicture/owner/${id}`)
     .then(responce =>{
-      console.log(responce.data[0].url);
+      //console.log(responce.data[0].url);
+     // console.log(responce);
       const picture = "http://localhost:3001/"+responce.data[0].url ;
       this.setState({picture:picture})
-
+      //profile
     } )
     .catch (function (error){
       console.log(error)

@@ -1,7 +1,7 @@
 import React , {Component} from 'react';
 import axios from 'axios' ;
 import {Route , BrowserRouter , Switch} from 'react-router-dom'
-import Dashboard from './dashboard/dashboard';
+import Dashboard from './dashboard/dashboard.js';
 import Profile from './mycomponents/profile/profile';
 import Signin from './container/signin';
 import Signup from './container/signup';
